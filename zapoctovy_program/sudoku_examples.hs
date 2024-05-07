@@ -1,5 +1,7 @@
 module SudokuExamples where
 
+import Data.List
+
 import Sudoku (Table)
 
 example :: Table
@@ -157,12 +159,12 @@ hardest =
     , [0, 9, 0, 0, 0, 0, 4, 0, 0]
     ]
 
-recodex2x2 :: Table
-recodex2x2 = [[3,0,4,0],[0,1,0,3],[2,3,0,0],[1,0,0,2]]
-recodex2x2' :: Table
-recodex2x2' = [[3,0,4,0],[0,1,0,3],[2,3,0,0],[4,0,0,2]] 
-recodex2x2'' :: Table
-recodex2x2'' = [[0,0,0,0],[2,0,3,0],[0,1,0,4],[0,0,0,0]] 
+recodex1 :: Table
+recodex1 = [[3,0,4,0],[0,1,0,3],[2,3,0,0],[1,0,0,2]]
+recodex2 :: Table
+recodex2 = [[3,0,4,0],[0,1,0,3],[2,3,0,0],[4,0,0,2]] 
+recodex3 :: Table
+recodex3 = [[0,0,0,0],[2,0,3,0],[0,1,0,4],[0,0,0,0]] 
 
 tough16x16 :: Table
 tough16x16 =
