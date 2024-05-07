@@ -50,7 +50,7 @@ getCell table row col = table !! row !! col
 
 -- Function to find all possible numbers for each cell in the whole table
 allPossibleMoves :: Table -> Int -> PossibleMoves
-allPossibleMoves table tableLen = 
+allPossibleMoves table tableLen =
     [[
     -- Get value of the cell
     case getCell table row col of
@@ -76,7 +76,7 @@ getPossibleMovesInCell table row col tableLen = filter (not . (`elem` takenValue
 -- Given a table and possible moves for each cell, assign numbers to empty cell where there is only 1 option
 -- and continue solving by calling solve' with the new table
 assignCertainMoves :: Table -> PossibleMoves -> Int -> Maybe Table
-assignCertainMoves table moves tableLen = 
+assignCertainMoves table moves tableLen =
     solve' [[assignCertainValueToCell (getCell table row col) (moves !! row !! col) | col <- [0..tableLen - 1]] | row <- [0..tableLen - 1]] tableLen
     where
         -- Helper function 
@@ -101,7 +101,7 @@ chooseRandomMove table moves tableLen =
     case firstShortest moves 0 0 (-1,-1,[0..length table]) of
         Just (row, col, options) -> tryAllOptionsForCell table row col options tableLen
         _ -> Nothing
-    where 
+    where
     -- case first moves 0 0 of
     --     Just (row, col, options) -> tryAll table row col options
     --     _ -> Nothing
@@ -149,7 +149,53 @@ isOver table tableLen =
     -- All rows are valid
     all (isValidList tableLen . getRow table) [0..tableLen - 1] &&
     -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+    
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+    -- All columns are valid
+
+    -- All columns are valid
     all (isValidList tableLen . getCol table) [0..tableLen - 1] &&
+    -- All subgrids are valid
+    -- All subgrids are valid
+    -- All subgrids are valid
+    -- All subgrids are valid
+    -- All subgrids are valid
+    -- All subgrids are valid
+    -- All subgrids are valid
     -- All subgrids are valid
     all (isValidList tableLen) [getSubTable table r c tableLen | r <- [0..tableLen - 1], c <- [0..tableLen - 1]]
 
@@ -188,23 +234,35 @@ solve table =
         checkLen len xs = length xs == len
 
     in
-        -- Starts by checking whether the table has correct size
-        if 
-            -- Number of rows has to equal number of columns
-            rowLen == colLen &&
-            -- Both of the numbers have to be squares
-            isNumberSquare rowLen &&
-            -- Make sure all rows have the same length
-            all (checkLen rowLen) table &&
-            -- Make sure all columns have the same length
-            all (checkLen colLen) [getCol table c | c <- [0..colLen]] 
-            
-            then
-                -- Call helper function to actually solve the sudoku
-                solve' table rowLen
+        if null table then
+            error "Empty table."
+        else if rowLen /= colLen then
+            error ("The length of the first row (" ++ show colLen ++ ") does not equal the length of the first column (" ++ show rowLen ++ ").")
+        else if not $ isNumberSquare rowLen then
+            error ("Incorrect sudoku size, has to be n^2 x n^2 for some n. The current size is " ++ show rowLen ++ "x" ++ show rowLen ++ ".")
+        else if not $ all (checkLen rowLen) table then
+            error "Not all rows have the same length."
+        else if not $ all (checkLen colLen) [getCol table c | c <- [0..colLen]] then
+            error "Not all columns have the same length."
         else
-            -- Otherwise the size is incorrect
-            error ("Incorrect sudoku size, has to be n^2 x n^2 for some n. Number of rows is " ++ show rowLen ++ ", number of columns is " ++ show colLen)
+            solve' table rowLen
+        -- -- Starts by checking whether the table has correct size
+        -- if 
+        --     -- Number of rows has to equal number of columns
+        --     rowLen == colLen &&
+        --     -- Both of the numbers have to be squares
+        --     isNumberSquare rowLen &&
+        --     -- Make sure all rows have the same length
+        --     all (checkLen rowLen) table &&
+        --     -- Make sure all columns have the same length
+        --     all (checkLen colLen) [getCol table c | c <- [0..colLen]] 
+
+        --     then
+        --         -- Call helper function to actually solve the sudoku
+        --         solve' table rowLen
+        -- else
+        --     -- Otherwise the size is incorrect
+        --     error ("Incorrect sudoku size, has to be n^2 x n^2 for some n. Number of rows is " ++ show rowLen ++ ", number of columns is " ++ show colLen)
 
 -- Main solving function
 solve' :: Table -> Int -> Maybe Table
