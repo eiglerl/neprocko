@@ -164,6 +164,7 @@ recodex2 = [[3,0,4,0],[0,1,0,3],[2,3,0,0],[4,0,0,2]]
 recodex3 :: Table
 recodex3 = [[0,0,0,0],[2,0,3,0],[0,1,0,4],[0,0,0,0]] 
 
+-- Probably takes too long to compute
 tough16x16 :: Table
 tough16x16 =
     [ [0, 6, 0, 0, 0, 0, 14, 0, 4, 0, 0, 0, 9, 8, 5, 10]
@@ -184,6 +185,7 @@ tough16x16 =
     , [0, 0, 0, 5, 12, 14, 0, 2, 0, 0, 0, 1, 11, 9, 0, 4]
     ]
 
+-- Should be finished in about 6s
 medium16x16 :: Table
 medium16x16 = 
     [ [3, 0, 0, 0, 0, 0, 5, 0, 16, 13, 0, 12, 2, 8, 11, 14]
