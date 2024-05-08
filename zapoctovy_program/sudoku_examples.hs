@@ -1,7 +1,5 @@
 module SudokuExamples where
 
-import Data.List
-
 import Sudoku (Table)
 
 example :: Table
