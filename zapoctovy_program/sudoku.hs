@@ -98,6 +98,7 @@ needRandom moves = not (any (any (\x -> length x == 1)) moves)
 -- and calls `tryAllOptionsForCell` function to try all the options using DFS
 chooseRandomMove :: Table -> PossibleMoves -> Int -> Maybe Table
 chooseRandomMove table moves tableLen =
+    -- [0..length table] just so that it is longer than the longest possible list of options for a cell
     case firstShortest moves 0 0 (-1,-1,[0..length table]) of
         Just (row, col, options) -> tryAllOptionsForCell table row col options tableLen
         _ -> Nothing
@@ -130,7 +131,7 @@ chooseRandomMove table moves tableLen =
 tryAllOptionsForCell :: [[Int]] -> Int -> Int -> [Int] -> Int -> Maybe Table
 -- If the list of options is empty there is no solution => return `Nothing`
 tryAllOptionsForCell table row col [] _ = Nothing
--- Otherwise try solving a table where cell has value `pos`
+-- Otherwise try solving a table where the cell has value `pos`
 tryAllOptionsForCell table row col (pos:possibilities) tableLen =
     case solve' newTable tableLen of
         -- Return the solution if it is valid
@@ -149,53 +150,7 @@ isOver table tableLen =
     -- All rows are valid
     all (isValidList tableLen . getRow table) [0..tableLen - 1] &&
     -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-    
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-    -- All columns are valid
-
-    -- All columns are valid
     all (isValidList tableLen . getCol table) [0..tableLen - 1] &&
-    -- All subgrids are valid
-    -- All subgrids are valid
-    -- All subgrids are valid
-    -- All subgrids are valid
-    -- All subgrids are valid
-    -- All subgrids are valid
-    -- All subgrids are valid
     -- All subgrids are valid
     all (isValidList tableLen) [getSubTable table r c tableLen | r <- [0..tableLen - 1], c <- [0..tableLen - 1]]
 
