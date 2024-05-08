@@ -1,0 +1,6 @@
+## Sudoku solver
+The `Sudoku` module, contained within the `sudoku.hs` file, encapsulates a solver for Sudoku puzzles. It introduces a `Table` type, represented by `[[Int]]`, to depict Sudoku boards. At the core of the module lies the `solve` function, tasked with taking a Sudoku table as input (`Table`) and returning a result of type `Maybe Table`. This result either presents the solved board or indicates impossibility (`Nothing`) if a solution cannot be derived. Should the input table be incorrectly defined, the function raises errors accompanied by explanatory messages. Notably, the solver is proficient in tackling Sudoku puzzles of dimensions $n^2$ x $n^2$.
+
+### Example boards
+
+The file `sudoku_examples.hs` features meticulously crafted Sudoku boards, accurately defined and readily applicable for solving via the `solve` function. Users can effortlessly invoke these boards for resolution by calling `solve SudokuExamples.NAMEOFBOARD`. The provided examples encompass puzzles of dimensions $4$ x $4$, $9$ x $9$, and $16$ x $16$, spanning varying levels of difficulty. However, users should exercise caution regarding the computational demands, especially when dealing with exceedingly challenging Sudoku puzzles larger than $9$ x $9$.
