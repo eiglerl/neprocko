@@ -17,8 +17,8 @@ example =
     , [0, 0, 0, 0, 8, 0, 0, 7, 9]
     ]
 
-easyBoard :: Table
-easyBoard =
+easy :: Table
+easy =
     [ [0, 6, 2, 4, 0, 5, 7, 3, 0]
     , [0, 8, 0, 7, 0, 3, 2, 0, 9]
     , [0, 7, 0, 9, 2, 0, 6, 5, 0]
@@ -30,8 +30,8 @@ easyBoard =
     , [7, 0, 3, 2, 0, 4, 9, 0, 6]
     ]
 
-veryEasyBoard :: Table
-veryEasyBoard =
+veryEasy :: Table
+veryEasy =
     [ [1, 2, 3, 6, 7, 8, 9, 4, 5]
     , [5, 8, 4, 2, 3, 9, 7, 6, 1]
     , [9, 6, 7, 1, 4, 5, 3, 2, 8]
@@ -42,8 +42,8 @@ veryEasyBoard =
     , [2, 1, 9, 8, 5, 7, 4, 3, 6]
     , [7, 4, 5, 3, 1, 6, 8, 9, 2]
     ]
-veryEasyBoard2 :: Table
-veryEasyBoard2 =
+veryEasy2 :: Table
+veryEasy2 =
     [ [1, 2, 3, 6, 7, 8, 9, 4, 5]
     , [5, 8, 4, 2, 3, 9, 7, 6, 1]
     , [9, 6, 7, 1, 4, 5, 3, 2, 8]
