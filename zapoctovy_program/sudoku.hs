@@ -178,6 +178,12 @@ arePossibleMovesValid ((tCol:tCols):tRows) ((mCol:mCols):mRows)
 changeNumberAtIndex :: Table -> Int -> Int -> Int -> Table
 changeNumberAtIndex matrix r c newNum =
     [ [ if (x, y) == (r, c) then newNum else val | (y, val) <- zip [0..] row ] | (x, row) <- zip [0..] matrix ]
+-- changeNumberAtIndex matrix r c newNum = 
+--     [if currR == r then update row c newNum else row | (currR, row) <- zip [0..] matrix]
+--     where 
+--         update :: Row -> Int -> Int -> Row
+--         update row c newNum =
+--             [if currC == c then newNum else col | (currC, col) <- zip [0..] row]
 
 -- The main function for the sudoku solver
 -- Recieves a table
