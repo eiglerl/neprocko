@@ -234,3 +234,7 @@ solve' table tableLen
     where
         moves = allPossibleMoves table tableLen
 
+-- Print a Sudoku grid
+prettyPrint :: Table -> IO ()
+prettyPrint sudoku = do
+    mapM_ print sudoku
