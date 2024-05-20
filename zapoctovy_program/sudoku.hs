@@ -144,22 +144,7 @@ isOver table tableLen =
     -- All rows are valid
     all (isValidList tableLen . getRow table) [0..tableLen - 1] &&
     -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-    -- All columns are valid
-
-    -- All columns are valid
-
-    -- All columns are valid
-    
-    -- All columns are valid
-    -- All columns are valid
-
-    -- All columns are valid
     all (isValidList tableLen . getCol table) [0..tableLen - 1] &&
-    -- All subgrids are valid
-    -- All subgrids are valid
-    -- All subgrids are valid
     -- All subgrids are valid
     all (isValidList tableLen) [getSubTable table r c tableLen | r <- [0..tableLen - 1], c <- [0..tableLen - 1]]
 
