@@ -75,7 +75,7 @@ getPossibleMovesInCell table row col tableLen = filter (not . (`elem` takenValue
 
 -- Given a table and possible moves for each cell, assign numbers to empty cell where there is only 1 option
 -- and continue solving by calling solve' with the new table
-assignCertainMoves :: Table -> PossibleMoves -> Int -> Maybe Table
+assignCertainMoves :: Table -> PossibleMoves -> Int -> [Table]
 assignCertainMoves table moves tableLen =
     solve' [[assignCertainValueToCell (getCell table row col) (moves !! row !! col) | col <- [0..tableLen - 1]] | row <- [0..tableLen - 1]] tableLen
     where
@@ -96,12 +96,12 @@ needRandom moves = not (any (any (\x -> length x == 1)) moves)
 
 -- A function that finds the best candidate for a random move
 -- and calls `tryAllOptionsForCell` function to try all the options using DFS
-chooseRandomMove :: Table -> PossibleMoves -> Int -> Maybe Table
+chooseRandomMove :: Table -> PossibleMoves -> Int -> [Table]
 chooseRandomMove table moves tableLen =
     -- [0..length table] just so that it is longer than the longest possible list of options for a cell
     case firstShortest moves 0 0 (-1,-1,[0..length table]) of
         Just (row, col, options) -> tryAllOptionsForCell table row col options tableLen
-        _ -> Nothing
+        _ -> []
     where
     -- case first moves 0 0 of
     --     Just (row, col, options) -> tryAll table row col options
@@ -128,18 +128,12 @@ chooseRandomMove table moves tableLen =
         | otherwise = firstShortest (cols:rows) r (c + 1) (bestR, bestC, shortest)
 
 -- Function to try all possible values for a cell using DFS and backtracking
-tryAllOptionsForCell :: [[Int]] -> Int -> Int -> [Int] -> Int -> Maybe Table
+tryAllOptionsForCell :: [[Int]] -> Int -> Int -> [Int] -> Int -> [Table]
 -- If the list of options is empty there is no solution => return `Nothing`
-tryAllOptionsForCell table row col [] _ = Nothing
+tryAllOptionsForCell table row col [] _ = []
 -- Otherwise try solving a table where the cell has value `pos`
 tryAllOptionsForCell table row col (pos:possibilities) tableLen =
-    case solve' newTable tableLen of
-        -- Return the solution if it is valid
-        Just solvedTable ->
-            Just solvedTable
-        -- Otherwise try next option for the cell using recursive call
-        Nothing ->
-            tryAllOptionsForCell table row col possibilities tableLen
+    solve' newTable tableLen ++ tryAllOptionsForCell table row col possibilities tableLen
     where
         -- Updated table where cell has value `pos`
         newTable = changeNumberAtIndex table row col pos
@@ -150,7 +144,22 @@ isOver table tableLen =
     -- All rows are valid
     all (isValidList tableLen . getRow table) [0..tableLen - 1] &&
     -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+    -- All columns are valid
+
+    -- All columns are valid
+
+    -- All columns are valid
+    
+    -- All columns are valid
+    -- All columns are valid
+
+    -- All columns are valid
     all (isValidList tableLen . getCol table) [0..tableLen - 1] &&
+    -- All subgrids are valid
+    -- All subgrids are valid
+    -- All subgrids are valid
     -- All subgrids are valid
     all (isValidList tableLen) [getSubTable table r c tableLen | r <- [0..tableLen - 1], c <- [0..tableLen - 1]]
 
@@ -190,6 +199,34 @@ changeNumberAtIndex matrix r c newNum =
 solve :: Table -> Maybe Table
 solve table =
     let
+        check = checkTableCorrectness table
+        rowLen = length table
+    in
+        if not check then
+            Nothing
+        else
+        -- Tries finding a solution
+        case solve' table rowLen of
+            -- If the solution does not exist, return Nothing
+            table | null table -> Nothing
+            -- Else return first solution found
+            table | otherwise -> Just $ head table
+
+-- The main function for the sudoku solver
+-- Recieves a table
+solveAll :: Table -> [Table]
+solveAll table =
+    -- Tries finding all solutions
+    if checkTableCorrectness table then
+        solve' table (length table)
+    else
+        []
+
+
+-- Utility function to make sure the table has correct sizes
+checkTableCorrectness :: Table -> Bool
+checkTableCorrectness table =
+    let
         rowLen = length table
         colLen = length $ head table
         checkLen len xs = length xs == len
@@ -203,35 +240,16 @@ solve table =
             error ("Incorrect sudoku size, has to be n^2 x n^2 for some n. The current size is " ++ show rowLen ++ "x" ++ show rowLen ++ ".")
         else if not $ all (checkLen rowLen) table then
             error "Not all rows have the same length."
-        else if not $ all (checkLen colLen) [getCol table c | c <- [0..colLen]] then
-            error "Not all columns have the same length."
-        else
-            solve' table rowLen
-        -- -- Starts by checking whether the table has correct size
-        -- if 
-        --     -- Number of rows has to equal number of columns
-        --     rowLen == colLen &&
-        --     -- Both of the numbers have to be squares
-        --     isNumberSquare rowLen &&
-        --     -- Make sure all rows have the same length
-        --     all (checkLen rowLen) table &&
-        --     -- Make sure all columns have the same length
-        --     all (checkLen colLen) [getCol table c | c <- [0..colLen]] 
+        else all (checkLen colLen) [getCol table c | c <- [0..colLen]] || error "Not all columns have the same length."
 
-        --     then
-        --         -- Call helper function to actually solve the sudoku
-        --         solve' table rowLen
-        -- else
-        --     -- Otherwise the size is incorrect
-        --     error ("Incorrect sudoku size, has to be n^2 x n^2 for some n. Number of rows is " ++ show rowLen ++ ", number of columns is " ++ show colLen)
 
 -- Main solving function
-solve' :: Table -> Int -> Maybe Table
+solve' :: Table -> Int -> [Table]
 solve' table tableLen
     -- Return the table if it is solved
-    | isOver table tableLen = Just table
+    | isOver table tableLen = [table]
     -- Return `Nothing` if it cannot be solved
-    | not (arePossibleMovesValid table moves) = Nothing
+    | not (arePossibleMovesValid table moves) = []
     -- Continue with a random move if needed
     | needRandom moves = chooseRandomMove table moves tableLen
     -- Otherwise fill in certain moves
