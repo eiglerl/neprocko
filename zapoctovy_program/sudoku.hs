@@ -1,4 +1,4 @@
-module Sudoku (Table) where
+module Sudoku (Table, solve, prettyPrint, solveAll) where
 
 
 import Data.List
