@@ -11,15 +11,12 @@ prekomprese' left right = (dist, len, char) : prekomprese' (left ++ dif) (drop (
         (dist, len, char) = longestPrefix left right
         dif = take (len +1) right
 
-
 longestPrefix :: String -> String -> (Int, Int, Char)
 longestPrefix left right = if null prefixes then (0,0, head right) else (revStart + len, len, right !! len)
     where
         revLeft = reverse left
         prefixes = takeWhile (\(check,_,_) -> check) [isSubstring revLeft (reverse init) 0 | init <- inits right]
         (check, revStart, len) = last prefixes
-
-
 
 isSubstring :: String -> String -> Int -> (Bool, Int, Int)
 isSutstring _ [] _ = (True, 0, 0)
